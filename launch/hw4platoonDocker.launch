@@ -1,0 +1,89 @@
+<launch>
+
+  <!-- Bagfile output directory -->
+  <arg name="bagfileout" default="/ros/catkin_ws/homework4"/>
+
+  <!-- Lead car parameters -->
+  <param name="/leadcar/x0" type="double" value="40.0" />
+  <param name="/leadcar/v0" type="double" value="20.0" />
+
+  <!-- Ego car parameters -->
+  <param name="/egocar/x0" type="double" value="0.0" />
+  <param name="/egocar/v0" type="double" value="10.0" />
+
+  <!-- Additional cars' initial parameters -->
+  <param name="/car2/x0" type="double" value="-10.0" />
+  <param name="/car2/v0" type="double" value="10.0" />
+  <param name="/car3/x0" type="double" value="-20.0" />
+  <param name="/car3/v0" type="double" value="10.0" />
+  <param name="/car4/x0" type="double" value="-30.0" />
+  <param name="/car4/v0" type="double" value="10.0" />
+  <param name="/car5/x0" type="double" value="-40.0" />
+  <param name="/car5/v0" type="double" value="10.0" />
+  <param name="/car6/x0" type="double" value="-50.0" />
+  <param name="/car6/v0" type="double" value="10.0" />
+  <param name="/car7/x0" type="double" value="-60.0" />
+  <param name="/car7/v0" type="double" value="10.0" />
+
+  <!-- Rosbag player -->
+  <node pkg="rosbag" type="play" name="rosbag_player" args="/ros/catkin_ws/mytest.bag --topics /car/state/vel_x -s 100">
+    <remap from="/car/state/vel_x" to="/leadcar/vel_x" />
+  </node>
+
+  <!-- Lead car namespace -->
+  <group ns="leadcar">
+    <node pkg="odometer" type="odometer" name="odometer_leadcar" />
+  </group>
+
+  <!-- Define the ego car -->
+  <group ns="egocar">
+    <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node" />
+    <node pkg="homework4" type="homework4" name="homework4_node">
+      <remap from="/rel_vel" to="/egocar/rel_vel" />
+      <remap from="/car/state/vel_x" to="/egocar/vel_x" />
+      <remap from="/lead_dist" to="/egocar/lead_dist" />
+      <remap from="/cmd_accel" to="/egocar/cmd_accel" />
+    </node>
+  </group>
+
+  <!-- Subtractors for ego car -->
+  <node pkg="subtractor" type="subtractor" name="subtractor_relvel_egocar">
+    <remap from="in1" to="/leadcar/vel_x" />
+    <remap from="in2" to="/egocar/vel_x" />
+    <remap from="diff" to="/egocar/rel_vel" />
+  </node>
+  <node pkg="subtractor" type="subtractor" name="subtractor_odom_egocar">
+    <remap from="in1" to="/leadcar/odom" />
+    <remap from="in2" to="/egocar/odom_x" />
+    <remap from="diff" to="/egocar/lead_dist" />
+  </node>
+
+  <!-- Add additional cars -->
+  <!-- This pattern repeats for cars 2 to 7 -->
+  <group ns="car2">
+    <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node_car2" />
+    <node pkg="homework4" type="homework4" name="homework4_node_car2">
+      <remap from="/rel_vel" to="/car2/rel_vel" />
+      <remap from="/car/state/vel_x" to="/car2/vel_x" />
+      <remap from="/lead_dist" to="/car2/lead_dist" />
+      <remap from="/cmd_accel" to="/car2/cmd_accel" />
+    </node>
+  </group>
+  <node pkg="subtractor" type="subtractor" name="subtractor_relvel_car2">
+    <remap from="in1" to="/egocar/vel_x" />
+    <remap from="in2" to="/car2/vel_x" />
+    <remap from="diff" to="/car2/rel_vel" />
+  </node>
+  <node pkg="subtractor" type="subtractor" name="subtractor_odom_car2">
+    <remap from="in1" to="/egocar/odom_x" />
+    <remap from="in2" to="/car2/odom_x" />
+    <remap from="diff" to="/car2/lead_dist" />
+  </node>
+
+  <!-- Repeat similar definitions for car3 to car7 -->
+  <!-- Use the same pattern as car2, updating ns and node names for each additional car -->
+
+  <!-- Rosbag recorder -->
+  <node pkg="rosbag" type="record" name="rosbag_recorder" args="-a -o $(arg bagfileout)" />
+
+</launch>
