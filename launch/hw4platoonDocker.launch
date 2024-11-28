@@ -35,7 +35,7 @@
     <node pkg="odometer" type="odometer" name="odometer_leadcar" />
   </group>
 
-  <!-- Define the ego car -->
+  <!-- Ego car namespace -->
   <group ns="egocar">
     <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node" />
     <node pkg="homework4" type="homework4" name="homework4_node">
@@ -58,8 +58,7 @@
     <remap from="diff" to="/egocar/lead_dist" />
   </node>
 
-  <!-- Add additional cars -->
-  <!-- This pattern repeats for cars 2 to 7 -->
+  <!-- Car 2 -->
   <group ns="car2">
     <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node_car2" />
     <node pkg="homework4" type="homework4" name="homework4_node_car2">
@@ -80,8 +79,110 @@
     <remap from="diff" to="/car2/lead_dist" />
   </node>
 
-  <!-- Repeat similar definitions for car3 to car7 -->
-  <!-- Use the same pattern as car2, updating ns and node names for each additional car -->
+  <!-- Car 3 -->
+  <group ns="car3">
+    <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node_car3" />
+    <node pkg="homework4" type="homework4" name="homework4_node_car3">
+      <remap from="/rel_vel" to="/car3/rel_vel" />
+      <remap from="/car/state/vel_x" to="/car3/vel_x" />
+      <remap from="/lead_dist" to="/car3/lead_dist" />
+      <remap from="/cmd_accel" to="/car3/cmd_accel" />
+    </node>
+  </group>
+  <node pkg="subtractor" type="subtractor" name="subtractor_relvel_car3">
+    <remap from="in1" to="/car2/vel_x" />
+    <remap from="in2" to="/car3/vel_x" />
+    <remap from="diff" to="/car3/rel_vel" />
+  </node>
+  <node pkg="subtractor" type="subtractor" name="subtractor_odom_car3">
+    <remap from="in1" to="/car2/odom_x" />
+    <remap from="in2" to="/car3/odom_x" />
+    <remap from="diff" to="/car3/lead_dist" />
+  </node>
+
+  <!-- Car 4 -->
+  <group ns="car4">
+    <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node_car4" />
+    <node pkg="homework4" type="homework4" name="homework4_node_car4">
+      <remap from="/rel_vel" to="/car4/rel_vel" />
+      <remap from="/car/state/vel_x" to="/car4/vel_x" />
+      <remap from="/lead_dist" to="/car4/lead_dist" />
+      <remap from="/cmd_accel" to="/car4/cmd_accel" />
+    </node>
+  </group>
+  <node pkg="subtractor" type="subtractor" name="subtractor_relvel_car4">
+    <remap from="in1" to="/car3/vel_x" />
+    <remap from="in2" to="/car4/vel_x" />
+    <remap from="diff" to="/car4/rel_vel" />
+  </node>
+  <node pkg="subtractor" type="subtractor" name="subtractor_odom_car4">
+    <remap from="in1" to="/car3/odom_x" />
+    <remap from="in2" to="/car4/odom_x" />
+    <remap from="diff" to="/car4/lead_dist" />
+  </node>
+
+  <!-- Car 5 -->
+  <group ns="car5">
+    <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node_car5" />
+    <node pkg="homework4" type="homework4" name="homework4_node_car5">
+      <remap from="/rel_vel" to="/car5/rel_vel" />
+      <remap from="/car/state/vel_x" to="/car5/vel_x" />
+      <remap from="/lead_dist" to="/car5/lead_dist" />
+      <remap from="/cmd_accel" to="/car5/cmd_accel" />
+    </node>
+  </group>
+  <node pkg="subtractor" type="subtractor" name="subtractor_relvel_car5">
+    <remap from="in1" to="/car4/vel_x" />
+    <remap from="in2" to="/car5/vel_x" />
+    <remap from="diff" to="/car5/rel_vel" />
+  </node>
+  <node pkg="subtractor" type="subtractor" name="subtractor_odom_car5">
+    <remap from="in1" to="/car4/odom_x" />
+    <remap from="in2" to="/car5/odom_x" />
+    <remap from="diff" to="/car5/lead_dist" />
+  </node>
+
+  <!-- Car 6 -->
+  <group ns="car6">
+    <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node_car6" />
+    <node pkg="homework4" type="homework4" name="homework4_node_car6">
+      <remap from="/rel_vel" to="/car6/rel_vel" />
+      <remap from="/car/state/vel_x" to="/car6/vel_x" />
+      <remap from="/lead_dist" to="/car6/lead_dist" />
+      <remap from="/cmd_accel" to="/car6/cmd_accel" />
+    </node>
+  </group>
+  <node pkg="subtractor" type="subtractor" name="subtractor_relvel_car6">
+    <remap from="in1" to="/car5/vel_x" />
+    <remap from="in2" to="/car6/vel_x" />
+    <remap from="diff" to="/car6/rel_vel" />
+  </node>
+  <node pkg="subtractor" type="subtractor" name="subtractor_odom_car6">
+    <remap from="in1" to="/car5/odom_x" />
+    <remap from="in2" to="/car6/odom_x" />
+    <remap from="diff" to="/car6/lead_dist" />
+  </node>
+
+  <!-- Car 7 -->
+  <group ns="car7">
+    <node pkg="carsimplesimulink" type="carsimplesimulink" name="carsimplesimulink_node_car7" />
+    <node pkg="homework4" type="homework4" name="homework4_node_car7">
+      <remap from="/rel_vel" to="/car7/rel_vel" />
+      <remap from="/car/state/vel_x" to="/car7/vel_x" />
+      <remap from="/lead_dist" to="/car7/lead_dist" />
+      <remap from="/cmd_accel" to="/car7/cmd_accel" />
+    </node>
+  </group>
+  <node pkg="subtractor" type="subtractor" name="subtractor_relvel_car7">
+    <remap from="in1" to="/car6/vel_x" />
+    <remap from="in2" to="/car7/vel_x" />
+    <remap from="diff" to="/car7/rel_vel" />
+  </node>
+  <node pkg="subtractor" type="subtractor" name="subtractor_odom_car7">
+    <remap from="in1" to="/car6/odom_x" />
+    <remap from="in2" to="/car7/odom_x" />
+    <remap from="diff" to="/car7/lead_dist" />
+  </node>
 
   <!-- Rosbag recorder -->
   <node pkg="rosbag" type="record" name="rosbag_recorder" args="-a -o $(arg bagfileout)" />
