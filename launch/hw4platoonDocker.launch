@@ -4,7 +4,7 @@
   <arg name="bagfileout" default="/ros/catkin_ws/homework4"/>
 
   <!-- Lead car parameters -->
-  <param name="/leadcar/x0" type="double" value="40.0" />
+  <param name="/leadcar/x0" type="double" value="20.0" />
   <param name="/leadcar/v0" type="double" value="20.0" />
 
   <!-- Ego car parameters -->
@@ -12,17 +12,17 @@
   <param name="/egocar/v0" type="double" value="10.0" />
 
   <!-- Additional cars' initial parameters -->
-  <param name="/car2/x0" type="double" value="-10.0" />
+  <param name="/car2/x0" type="double" value="-20.0" />
   <param name="/car2/v0" type="double" value="10.0" />
-  <param name="/car3/x0" type="double" value="-20.0" />
+  <param name="/car3/x0" type="double" value="-40.0" />
   <param name="/car3/v0" type="double" value="10.0" />
-  <param name="/car4/x0" type="double" value="-30.0" />
+  <param name="/car4/x0" type="double" value="-60.0" />
   <param name="/car4/v0" type="double" value="10.0" />
-  <param name="/car5/x0" type="double" value="-40.0" />
+  <param name="/car5/x0" type="double" value="-80.0" />
   <param name="/car5/v0" type="double" value="10.0" />
-  <param name="/car6/x0" type="double" value="-50.0" />
+  <param name="/car6/x0" type="double" value="-100.0" />
   <param name="/car6/v0" type="double" value="10.0" />
-  <param name="/car7/x0" type="double" value="-60.0" />
+  <param name="/car7/x0" type="double" value="-120.0" />
   <param name="/car7/v0" type="double" value="10.0" />
 
   <!-- Rosbag player -->
